@@ -66,7 +66,7 @@ int main(int argc, char *argv[]) {
     fprintf(pidFile, "%d\n", getpid());
     fclose(pidFile);
 #else
-    printf("server listening at: http://127.0.0.1:4444");
+    printf("server listening at: http://127.0.0.1:8082");
 #endif
     // daemon code
     {
@@ -80,8 +80,8 @@ int main(int argc, char *argv[]) {
         });
 
         svr.set_base_dir("../public");
-        if (!svr.bind_to_port("0.0.0.0", 4444)) {
-            fprintf(stderr, "\ncouldn't bind to server socket: hostname=%s port=%d\n\n", "0.0.0.0", 4444);
+        if (!svr.bind_to_port("0.0.0.0", 8082)) {
+            fprintf(stderr, "\ncouldn't bind to server socket: hostname=%s port=%d\n\n", "0.0.0.0", 8082);
             return 1;
         }
 
