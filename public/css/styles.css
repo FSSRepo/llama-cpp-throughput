@@ -1,0 +1,130 @@
+body {
+    padding-top: 4.5rem;
+}
+
+.parallel-list {
+    width: 100%;
+}
+
+.container-wide {
+    max-width: 95%;
+    margin: auto;
+}
+
+.parallel-list .pll-info {
+    width: 32%;
+    height: 400px;
+    padding: 20px;
+    margin: 0.14% 0.14%;
+    float: left;
+    overflow: hidden;
+    box-shadow: 3px 5px 5px #9e9e9e;
+    border-radius: 20px;
+}
+
+.parallel-list .pll-info h5 {
+    font-size: 18px;
+}
+
+.parallel-list .pll-info .question-text {
+    font-size: 15px;
+    font-weight: 500;
+    margin-bottom: 0;
+}
+
+.parallel-list .pll-info .info-content {
+    float: right;
+}
+
+.parallel-list .pll-info .response-text {
+    font-size: 12px;
+    white-space: pre-line;
+    line-height: 13px;
+    height: 380px;
+}
+
+.parallel-list .pll-info .client-info {
+    font-size: 12px;
+    white-space: pre-line;
+    line-height: 13px;
+}
+
+.action-text {
+    font-size: 10pt !important;
+    color: #727272;
+}
+
+.send-btn {
+    height: 40px;
+}
+
+.disabled-btn {
+    color: #b4b2b2 !important;
+}
+
+.result-info {
+    font-size: 16px;
+}
+
+.process-info-table {
+    font-size: 14px;
+    width: 80%;
+    margin: 10px auto;
+    opacity: 0;
+    transition: ease all 0.7s;
+}
+
+.show-info {
+    opacity: 1 !important;
+}
+
+.process-info-table thead {
+    font-weight: 600;
+    font-size: 15px;
+}
+
+.process-info-table td {
+    border: solid 1px rgb(214, 214, 214);
+    text-align: center;
+}
+
+.process-info-table .property {
+    width: 30%;
+    background-color: #ececec;
+    text-align: left;
+}
+
+.custom-tooltip {
+    --bs-tooltip-bg: var(--bd-violet-bg);
+    --bs-tooltip-color: var(--bs-white);
+  }
+
+@media only screen and (max-width: 1200px) {
+    .container-wide {
+        max-width: 98%;
+    }
+
+    .process-info-table {
+        width: 100%;
+        margin: 10px 0;
+    }
+
+    .parallel-list .pll-info {
+        width: 48.5%;
+    }
+}
+
+@media only screen and (max-width: 700px) {
+    .container-wide {
+        max-width: 99%;
+    }
+
+    .process-info-table {
+        width: 100%;
+        margin: 10px 0;
+    }
+
+    .parallel-list .pll-info {
+        width: 100%;
+    }
+}

@@ -1,0 +1,91 @@
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Throughput Llama.cpp</title>
+    <link rel="stylesheet" type="text/css" href="css/styles.css" />
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <script src="libs/bootstrap.bundle.js"></script>
+    <link
+      href="css/material-icon.css"
+      rel="stylesheet"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-md fixed-top navbar-dark bg-dark">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">Llama cpp Throughput Benchmark</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      </div>
+    </nav>
+    <div class="container-wide">
+      <div class="input-group m-1" data-bs-toggle="tooltip" data-bs-placement="bottom"
+      data-bs-custom-class="custom-tooltip"
+      data-bs-title="Set the URL or ip:port to llama.cpp server">
+        <span class="input-group-text">Llama cpp server</span>
+        <input class="form-control" id="llama-host" type="text" value="http://127.0.0.1:90">
+      </div>
+      <div class="row">
+        <div class="col-auto">
+          <div class="input-group" data-bs-toggle="tooltip" data-bs-placement="top"
+          data-bs-custom-class="custom-tooltip"
+          data-bs-title="Number of clients to simulate">
+            <span class="input-group-text">Num clients</span>
+            <input class="form-control" id="num-parallels" type="number" value="1">
+          </div>
+        </div>
+        <div class="col-auto">
+          <div class="input-group" data-bs-toggle="tooltip" data-bs-placement="top"
+          data-bs-custom-class="custom-tooltip"
+          data-bs-title="Number of requests (questions) per client">
+            <span class="input-group-text">Num requests</span>
+            <input class="form-control" id="num-requests" type="number" value="1">
+          </div>
+        </div>
+        <div class="col-auto">
+          <div class="input-group" data-bs-toggle="tooltip" data-bs-placement="top"
+          data-bs-custom-class="custom-tooltip"
+          data-bs-title="Number of tokens to predict if stop word not found">
+            <span class="input-group-text">Max response</span>
+            <input class="form-control" id="max-predict" type="number" value="512">
+          </div>
+        </div>
+        <div class="col-auto">
+          <div class="form-check" data-bs-toggle="tooltip" data-bs-placement="top"
+          data-bs-custom-class="custom-tooltip"
+          data-bs-title="Ignore termination token and continues the generation">
+            <input class="form-check-input" type="checkbox" id="ignore-eos" checked>
+            <label class="form-check-label" for="ignore-eos">
+              Ignore EOS Token
+            </label>
+          </div>
+        </div>
+        <div class="col-auto">
+          <div class="form-check" data-bs-toggle="tooltip" data-bs-placement="top"
+          data-bs-custom-class="custom-tooltip"
+          data-bs-title="Keep context like a chatbot and stop generation when found a stop word. If a context shift is needed, the generation of other clients stalls until it's finished.">
+            <input class="form-check-input" type="checkbox" id="chat-behaivor" checked>
+            <label class="form-check-label" for="chat-behaivor">
+              Chat behaivor
+            </label>
+          </div>
+        </div>
+      </div>
+      <div class="hstack" style="margin-top: 10px;">
+        <a class="btn send-btn" data-bs-toggle="tooltip" data-bs-placement="top"
+        data-bs-custom-class="custom-tooltip"
+        data-bs-title="Launch parallel clients" id="btnPlay"><i class="material-symbols-outlined">play_arrow</i></a>
+        <a class="btn send-btn" id="btnStop"><i class="material-symbols-outlined">stop</i></a>
+      </div>
+      <table class="process-info-table" id="info-clients">
+      </table>
+      <div class="parallel-list" id="parallel-list"></div>
+    </div>
+    <script src="libs/jquery-3.6.0.min.js"></script>
+    <script src="libs/axios.min.js"></script>
+    <script src="server.js"></script>
+    <script src="main.js"></script>
+  </body>
+</html>
