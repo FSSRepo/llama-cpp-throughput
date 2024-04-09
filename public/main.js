@@ -106,6 +106,7 @@ class Parallel {
       this.processing_start = performance.now();
       this.paralell_index = index;
       this.last_tokens = "";
+      this.tokens_second = 0;
     } catch (e) {
       if (e.name !== 'AbortError') {
         console.error("llama error: ", e);
@@ -156,6 +157,7 @@ class Parallel {
     try {
       const decoder = new TextDecoder();
       const result = await this.reader.read();
+      const current_token_time = performance.now()
       if (result.done) {
         return;
       }
@@ -175,7 +177,6 @@ class Parallel {
           result[match[1]] = match[2]
           if (result.data) {
             result.data = JSON.parse(result.data);
-            const current_token_time = performance.now();
             this.slot_id = result.data.id_slot;
             if(this.token_count === 1) {
               this.last_token_time = current_token_time;
@@ -193,10 +194,14 @@ class Parallel {
                 this.content += this.last_tokens;
                 this.last_tokens = "";
                 this.updateTextGradient(index, 0);
+                $("#request-info-" + index).html("TTFT: " + this.processing_time.toFixed(2) + " s - " + (1.0 / (this.processing_time / this.pp_tokens)).toFixed(2) + " TPS\n" +
+                "TG " + this.token_count + " - " + this.tokens_second + " TPS");
+                this.tokens_second = 0;
               } else {
                 this.updateTextGradient(index, percent * 100);
               }
               this.last_tokens += new_token;
+              this.tokens_second++;
             }
             if (result.data.stop) {
               // real processed tokens
@@ -204,10 +209,13 @@ class Parallel {
               this.generated_tokens += result.data.tokens_predicted;
               this.context.push({ user: this.questions[this.current_question], assistant: this.content });
               this.continue_ = this.current_question + 1 < this.questions.length;
+              this.tokens_second = 0;
               this.controller.abort();
               $("#pl-response-" + index).html(this.content);
               $("#pl-next-token-" + index).html(this.last_tokens);
               this.updateTextGradient(index, 100);
+              $("#request-info-" + index).html("TTFT: " + this.processing_time.toFixed(2) + " s - " + (1.0 / (this.processing_time / this.pp_tokens)).toFixed(2) + " TPS\n" +
+              "TG " + this.token_count + " - " + result.data.timings.predicted_per_second.toFixed(2) + " TPS");
               if(this.continue_) {
                 this.reader = null;
               } else {
@@ -220,15 +228,9 @@ class Parallel {
               this.current_question++;
               return;
             } else {
-              let time_elapsed = (current_token_time - this.runtime_start) / 1000;
-              let time_token = (current_token_time - this.last_token_time);
+              let time_elapsed = (current_token_time - this.runtime_start) / 1000.0;
               $("#pl-info-" + index).html("Request: "+ (this.current_question + 1) + "/" + this.questions.length +" slot " + this.slot_id + "\nRuntime: " + formatTime(parseInt(time_elapsed)) + " " +
-              "\nPP Total: " + this.processed_tokens + " - TG Total: " +this.generated_tokens);
-              $("#request-info-" + index).html("TTFT: " + this.processing_time.toFixed(2) + " s - " + (1.0 / (this.processing_time / this.pp_tokens)).toFixed(2) + " TPS\n" +
-              (time_token > 1 ? "TG " + this.token_count + " - " + (
-                1 / (time_token / 1000.0)
-              ).toFixed(2) + " TPS" : ""));
-              this.last_token_time = current_token_time;
+              "\nPP Total: " + this.processed_tokens + " - TG Total: " +(this.generated_tokens + this.token_count));
             }
           }
           this.token_count++;
