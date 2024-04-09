@@ -389,7 +389,7 @@ class Main {
 $(document).ready(async () => {
   const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
   const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
-  const port = 90;
+  let port = 90;
   try {
      port = (await axios.get("/port")).data.port;
   }catch(e) {
