@@ -386,9 +386,15 @@ class Main {
   }
 }
 
-$(document).ready(() => {
+$(document).ready(async () => {
   const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
-  const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+  const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
+  const port = 90;
+  try {
+     port = (await axios.get("/port")).data.port;
+  }catch(e) {
+  }
+  $("#llama-host").val(window.location.protocol + "//" + window.location.hostname+":" + port);
   var main = new Main();
   main.initialize();
 });

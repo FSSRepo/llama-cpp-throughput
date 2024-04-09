@@ -6,6 +6,8 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <cstring>
+#include <string.h>
+#include <string>
 #include "httplib.h"
 
 using namespace httplib;
@@ -33,6 +35,12 @@ int main(int argc, char *argv[]) {
             return 1;
         }
         return 0;
+    }
+
+    int shared_port = -1;
+
+    if (argc == 3 && std::strcmp(argv[1], "-p") == 0) {
+        shared_port = std::stoi(argv[2]);
     }
 
     pid_t pid = fork();
@@ -65,9 +73,12 @@ int main(int argc, char *argv[]) {
     }
     fprintf(pidFile, "%d\n", getpid());
     fclose(pidFile);
+    
 #else
     printf("server listening at: http://127.0.0.1:8082");
+    int shared_port = 9999;
 #endif
+
     // daemon code
     {
         Server svr;
@@ -79,9 +90,14 @@ int main(int argc, char *argv[]) {
             return res.set_content("", "application/json; charset=utf-8");
         });
 
+        svr.Get("/port", [&](const httplib::Request &, httplib::Response & res) {
+            std::string resp = "{\"port\": " + std::to_string(shared_port) + "}";
+            res.set_content(resp.c_str(), "application/json");
+            res.status = 200; // HTTP OK
+        });
+
         svr.set_base_dir("../public");
         if (!svr.bind_to_port("0.0.0.0", 8082)) {
-            fprintf(stderr, "\ncouldn't bind to server socket: hostname=%s port=%d\n\n", "0.0.0.0", 8082);
             return 1;
         }
 
