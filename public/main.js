@@ -423,7 +423,7 @@ class Parallel {
       if(!quest.document) {
         $("#pl-question-" + index).html(quest.content);
       } else {
-        $("#pl-question-" + index).html(document_questions[quest.doc_idx][quest.question_idx] + `\n<span style="font-weight: 400;">Expected Response: ${expected_answers[quest.doc_idx][quest.question_idx]}</span>`);
+        $("#pl-question-" + index).html(document_questions[quest.doc_idx][quest.question_idx] + `\n<span style="font-weight: 400; font-size: 16px;">Expected Response: ${expected_answers[quest.doc_idx][quest.question_idx]}</span>`);
       }
       this.pp_tokens = (await axios.post($("#llama-host").val() + server[server_index].endpoint_tokenizer, {content: this.questions[this.current_question].content })).data.tokens.length;
       $("#pl-info-" + index).html("Request: "+ (this.current_question + 1) + "/" + this.questions.length +" in slot " + this.slot_id + "\nProcessing " + this.pp_tokens + " tokens ("+(this.questions[this.current_question].document ? "Document": "Question")+")");
