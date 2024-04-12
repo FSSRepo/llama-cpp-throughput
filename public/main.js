@@ -343,8 +343,9 @@ const expected_answers = [
 
 function formatTime(seconds) {
   const minutos = Math.floor(seconds / 60);
+  const horas = Math.floor(seconds / 360);
   const segundos = seconds % 60;
-  const tiempoFormateado = `${minutos}:${segundos < 10 ? '0' : ''}${segundos}`;
+  const tiempoFormateado = `${horas < 10 ? '0' : ''}${horas}:${minutos < 10 ? '0' : ''}${minutos}:${segundos < 10 ? '0' : ''}${segundos}`;
   return tiempoFormateado;
 }
 
