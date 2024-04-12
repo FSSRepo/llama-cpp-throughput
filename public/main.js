@@ -661,7 +661,7 @@ class Main {
       </div>
       <span class="client-info" id="request-info-${i}"></span>
       <p class="question-text" id="pl-question-${i}"></p>
-        <p class="response-text">
+        <p class="response-text disable-scrollbars">
           <span id="pl-response-${i}">
           </span><span id="pl-next-token-${i}"></span>
         </p>
