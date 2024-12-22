@@ -364,7 +364,7 @@ const server = [
         prompt += context.map(chat => '\nUser: '  + chat.user + '\nAssistant:'  + chat.assistant).join('');
         prompt += '\nUser: '  + question + '\nAssistant:';
       } else {
-        prompt += 'User: '  + question + '\nAssistant:';
+        prompt += '\nUser: '  + question + '\nAssistant:';
       }
       let npredict = parseInt($("#max-predict").val());
       return {
@@ -397,7 +397,6 @@ class Parallel {
         let question_idx = Math.min(parseInt(Math.random() * document_questions[doc_idx].length*2), document_questions[doc_idx].length - 1);
         let process_doc = constant_documents[doc_idx] + "\nUser: " + document_questions[doc_idx][question_idx];
         this.questions.push({ document: true, content: process_doc, doc_idx, question_idx });
-        console.log(process_doc);
         has_document = true;
       }
     }
